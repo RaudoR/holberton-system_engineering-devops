@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # print the string 10 times
-$1
+: "${i=0}"
 for i in {1..10};do
 	echo "Holberton School"
 done
