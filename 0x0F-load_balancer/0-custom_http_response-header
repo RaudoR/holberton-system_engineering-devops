@@ -2,5 +2,5 @@
 # bash script to install nginx on a different server
 sudo apt-get -y update
 sudo apt-get -y install nginx
-sudo sed -i "26i add_header X-Served-By \$hostname;" /etc/nginx/nginx.conf
+sudo sed -i "23i\\\tadd_header X-Served-By $(cat /etc/hostname);" /etc/nginx/sites-available/default
 sudo service nginx restart
