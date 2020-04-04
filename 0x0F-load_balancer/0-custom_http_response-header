@@ -2,7 +2,10 @@
 # bash script to install nginx on a different server
 sudo apt-get -y update
 sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 sudo sed -i "23i\\\tadd_header X-Served-By $(cat /etc/hostname);" /etc/nginx/sites-available/default
 echo "Holberton School" | sudo tee /usr/share/nginx/html/index.html
 echo -e "Ceci n'est pas une page\n" | sudo tee /usr/share/nginx/html/custom_404.html
+sudo sed -i "/listen 80 default_server;/a add_header X-Served-By \"$HOSTNAME\";" /etc/nginx/sites-available/default
+sudo sed -i "/listen \[\:\:\]\:80 default_server;/a rewrite ^/redirect_me https://www.youtube.com permanent;\n\n error_page 404 /custom_404.html;\nlocation = /custom_404.html { root /usr/share/nginx/html; internal; }\n\n" /etc/nginx/sites-available/default
 sudo service nginx restart
