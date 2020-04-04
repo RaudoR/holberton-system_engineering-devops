@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-# Install load balancer
-sudo apt-get -y install haproxy
+# bash script to set up Load balancer on two websites usng Haproxy
+sudo apt-get update -y
+sudo apt-get install -y haproxy
+
 sudo sed -i "s/ENABLED=0/ENABLED=1/g" /etc/default/haproxy
-sudo sed -i "\$ a\listen 848-lb-01\n\tbind *:80\n\tmode http\n\tstats enable\n\tbalance roundrobin\n\tserver 848-web-01 34.74.25.201:80 check\n\tserver 848-web-02 54.173.62.214:80 check" /etc/haproxy/haproxy.cfg
-sudo service haproxy start
+front="\\\nfrontend http_front\n \tbind *:80\n \tmode http\n \tdefault_backend http_back\n"
+back="\\backend http_back\n \tbalance roundrobin\n \tserver 848-web-01 34.74.25.201:80 check\n \tserver 848-web-02 54.173.62.214:80 check"
+sudo sed -i "\$a$front\n$back" /etc/haproxy/haproxy.cfg
+
+sudo service haproxy restart
