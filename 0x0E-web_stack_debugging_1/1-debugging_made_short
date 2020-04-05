@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 # fix short and sweet
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx start
-kill "$(pgrep -f nginx | head -1)"
+cat /etc/nginx/sites-available/default > /etc/nginx/sites-enabled/default
+pkill -HUP nginx
