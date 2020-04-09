@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# script to dig url
+if [ "$#" -eq 2 ]
+then
+    subs=$2
+else
+    subs=("www" "lb-01" "web-01" "web-02")
+fi
+for sub in "${subs[@]}"
+do
+    echo -n "The subdomain $sub"
+    dig "$sub.$1" | grep -A1 'ANSWER SECTION:' | tail -n -1 | awk '{ print " is a " $4 " record and points to " $5}'
+done
