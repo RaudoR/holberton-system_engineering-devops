@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''script to get Emp ID and TODO list from REST API'''
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     import requests as re
     from sys import argv
 
